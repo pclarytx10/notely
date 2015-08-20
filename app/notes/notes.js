@@ -5,16 +5,28 @@ var api_key = '$2a$10$HteIxwc8DtPD2T86ZKE7Ku9pPPnhlveQstLiCv6mgqh4RyPrk/2Ri';
 
 angular.module('notely.notes', ['ngRoute'])
 
-.config(['$routeProvider', function($routeProvider){
+.config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/notes', {
-    templateUrl: 'notes/notes.html',
-    controller: 'NotesController'
+    templateUrl: 'notes/notes.html'
   });
 }])
 
 .controller('NotesController', ['$scope', '$http', function($scope, $http) {
   $http.get(nevernoteBasePath + 'notes?api_key=' + api_key)
-  .success(function(notesData) {
-    $scope.notes = notesData;
-  });
+    .success(function(notesData) {
+      $scope.notes = notesData;
+    });
+
+  $scope.commit = function() {
+    $http.post(nevernoteBasePath + 'notes', {
+      api_key: api_key,
+      note: {
+        title: 'The magic of AngularJS',
+        body_html: 'Whoever wrote this API must be a person.'
+      }
+    }).success(function(newNoteData) {
+      console.log('Saved!');
+      console.log(newNoteData);
+    });
+  };
 }]);
