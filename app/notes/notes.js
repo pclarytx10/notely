@@ -14,9 +14,14 @@ noteApp.config(['$routeProvider', function($routeProvider) {
 noteApp.controller('NotesController', ['$scope', 'NotesBackend', function($scope, NotesBackend) {
   var self = this;
   $scope.note = {};
+  $scope.notes = [];
 
   self.assignNotes = function(notes) {
     $scope.notes = notes;
+  };
+
+  $scope.hasNotes = function() {
+    return $scope.notes.length > 0;
   };
 
   $scope.commit = function() {
