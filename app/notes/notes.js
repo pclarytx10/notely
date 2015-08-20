@@ -20,8 +20,20 @@ noteApp.controller('NotesController', ['$scope', 'NotesBackend', function($scope
     $scope.notes = notes;
   };
 
+  self.findNoteById = function(noteId) {
+    for (var i = 0; i < $scope.notes.length; i++){
+      if ($scope.notes[i].id === noteId) {
+        $scope.notes[i];
+      }
+    }
+  };
+
   $scope.hasNotes = function() {
     return $scope.notes.length > 0;
+  };
+
+  $scope.loadNote = function(note) {
+    $scope.note = note;
   };
 
   $scope.commit = function() {
