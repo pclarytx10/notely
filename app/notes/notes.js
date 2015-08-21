@@ -16,14 +16,15 @@ noteApp.controller('NotesController', ['$scope', 'NotesBackend', function($scope
   $scope.note = {};
   $scope.notes = [];
 
-  self.assignNotes = function(notes) {
+  self.assignNotes = function(notes, note) {
     $scope.notes = notes;
+    $scope.note = JSON.parse(JSON.stringify(note));
   };
 
   self.findNoteById = function(noteId) {
-    for (var i = 0; i < $scope.notes.length; i++){
+    for (var i = 0; i < $scope.notes.length; i++) {
       if ($scope.notes[i].id === noteId) {
-        $scope.notes[i];
+        return $scope.notes[i];
       }
     }
   };
@@ -32,7 +33,7 @@ noteApp.controller('NotesController', ['$scope', 'NotesBackend', function($scope
     return JSON.parse(JSON.stringify(note));
   };
 
-  $scope.buttonText = function(note) {
+  $scope.buttonText = function() {
     if ($scope.note.id) {
       return "Update Note";
     }
@@ -56,6 +57,10 @@ noteApp.controller('NotesController', ['$scope', 'NotesBackend', function($scope
 
   $scope.loadNote = function(note) {
     $scope.note = self.cloneNote(note);
+  };
+
+  $scope.clearNote = function() {
+    $scope.note = {};
   };
 
   NotesBackend.fetchNotes(self.assignNotes);

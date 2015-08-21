@@ -12,7 +12,7 @@ app.service('NotesBackend', ['$http', function NotesBackend($http) {
     $http.get(nevernoteBasePath + 'notes?api_key=' + apiKey)
       .success(function(notesData) {
         notes = notesData;
-        callback(notes);
+        callback(notes, {});
       });
   };
 
@@ -22,7 +22,7 @@ app.service('NotesBackend', ['$http', function NotesBackend($http) {
       note: noteData
     }).success(function(newNoteData) {
       notes.unshift(newNoteData.note);
-      callback(notes);
+      callback(notes, newNoteData.note);
     });
   };
 
@@ -39,7 +39,7 @@ app.service('NotesBackend', ['$http', function NotesBackend($http) {
     for (var i = 0; i < notes.length; i++) {
       if (notes[i].id === updatedNoteData.id) {
         notes[i] = updatedNoteData;
-        callback(notes);
+        callback(notes, updatedNoteData);
         return updatedNoteData;
       }
     }
